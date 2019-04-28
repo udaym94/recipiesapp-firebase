@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, FormControl } from '@angul
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MaterialModule } from './material.module';
+import { FirebaseModule } from './firebase.module';
 
 @NgModule({
   declarations: [
@@ -13,17 +14,13 @@ import { MaterialModule } from './material.module';
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
-    // FormGroup,
-    // FormControl,
-    // FormBuilder
+    FirebaseModule
   ],
   exports: [
     PageNotFoundComponent,
     MaterialModule,
     ReactiveFormsModule,
-    // FormGroup,
-    // FormControl,
-    // FormBuilder
+    FirebaseModule
   ]
 })
 export class SharedModule { }

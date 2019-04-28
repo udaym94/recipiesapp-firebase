@@ -5,26 +5,31 @@
         <mat-form-field class="form-row">
           <mat-label>First Name</mat-label>
           <input type="text" matInput name="first_name" placeholder="Enter First Name" formControlName="first_name">
+          <mat-error *ngIf="first_name.invalid">Please Enter a First Name</mat-error>
         </mat-form-field>
 
         <mat-form-field class="form-row">
           <mat-label>Last Name</mat-label>
           <input type="text" matInput name="last_name" placeholder="Enter Last Name" formControlName="last_name">
+          <mat-error *ngIf="last_name.invalid">Please Enter a Last Name</mat-error>
         </mat-form-field>
 
         <mat-form-field class="form-row">
           <mat-label>Email</mat-label>
           <input type="text" matInput name="email" placeholder="Enter Email ID" formControlName="email">
+          <mat-error *ngIf="email.invalid">Please Enter a valid Email</mat-error>
         </mat-form-field>
 
         <mat-form-field class="form-row">
           <mat-label>Username</mat-label>
           <input type="text" matInput name="username" placeholder="Enter Username" formControlName="username">
+          <mat-error *ngIf="username.invalid">Plaese Enter a Username</mat-error>
         </mat-form-field>
 
         <mat-form-field class="form-row">
           <mat-label>Password</mat-label>
           <input type="password" matInput name="password" placeholder="Enter Passowrd" formControlName="password">
+          <mat-error *ngIf="password.invalid">Please Enter a passowrd</mat-error>
         </mat-form-field>
 
           <button mat-raised-button color="primary" [disabled]="registrationForm.invalid">Register</button>

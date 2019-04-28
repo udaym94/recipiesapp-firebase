@@ -1,0 +1,66 @@
+import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireAuth } from '@angular/fire/auth';
+import * as firebase from 'firebase/app';
+
+interface RegistrationFormData {
+  first_name: string;
+  last_name: string;
+  email: string;
+  username: string;
+  password: string;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+  authUser: any;
+  registeredUser: any;
+  constructor( private angularFirestore: AngularFirestore, private angularFireAuth: AngularFireAuth ) { }
+
+  async registerUser(data: RegistrationFormData) {
+    try {
+      this.authUser = await this.angularFireAuth.auth.createUserWithEmailAndPassword(data.email, data.password);
+      this.registeredUser = await this.angularFirestore.doc(`/users/${this.authUser.user.uid}`).set(data);
+      // success code here
+      return this.registeredUser;
+
+    } catch (error) {
+      console.log('Email & Password Registration Error', error);
+      return error.json();
+    }
+  }
+
+  async handleLogin(data: any) {
+    //
+    try {
+      const auth = await firebase.auth().signInWithEmailAndPassword(data.email, data.password);
+      return auth;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async changePassword(data: any) {
+    try {
+      const currentUser = this.angularFireAuth.auth.currentUser;
+      const credential = firebase.auth.EmailAuthProvider.credential(currentUser.email, data.oldPassword);
+      const authenticated = await currentUser.reauthenticateWithCredential(credential);
+      // https://stackoverflow.com/questions/52075138/updating-a-password-in-firebase-angular-5
+      // currentUser.reauthenticateWithCredential(credentials).
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async signOut() {
+    try {
+      return await this.angularFireAuth.auth.signOut();
+    } catch (error) {
+      return error;
+    }
+  }
+
+
+}

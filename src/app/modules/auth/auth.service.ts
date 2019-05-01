@@ -11,6 +11,11 @@ interface RegistrationFormData {
   password: string;
 }
 
+interface LoginFormData {
+  email: string;
+  password: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -32,13 +37,13 @@ export class AuthService {
     }
   }
 
-  async handleLogin(data: any) {
+  async handleLogin(data: LoginFormData) {
     //
     try {
       const auth = await firebase.auth().signInWithEmailAndPassword(data.email, data.password);
       return auth;
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 

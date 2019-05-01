@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../auth.service';
+import { MatSnackBar } from '@angular/material';
+import { UserService } from 'src/app/shared/user.service';
 // import { } from '@angular/forms';
 
 @Component({
@@ -11,7 +13,11 @@ import { AuthService } from '../../auth.service';
 
 export class RegisterComponent implements OnInit {
   registrationForm: FormGroup;
-  constructor( private formBuilder: FormBuilder, private authService: AuthService) {  }
+  constructor( private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private snackbar: MatSnackBar,
+    private userService: UserService
+    ) {  }
 
   ngOnInit() {
     this.registrationForm = this.formBuilder.group({
@@ -40,8 +46,15 @@ export class RegisterComponent implements OnInit {
   }
   // End Getting Form Values
   async handleRegistration(data: FormGroup) {
-    console.log('26', data.value);
-    await this.authService.registerUser(data.value);
+    try {
+      const registered = await this.authService.registerUser(data.value);
+      if (registered) {
+        this.snackbar.open('Registration Successful, please Login', 'close');
+      }
+    } catch (e) {
+      console.log('53', e);
+      this.snackbar.open('Something went Wrong, please Try Again', 'close');
+    }
   }
 
 }

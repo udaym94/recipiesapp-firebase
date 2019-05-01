@@ -1,3 +1,22 @@
-<p>
-  login works!
-</p>
+<div class="container content">
+  <div class="row">
+    <div class="col-md-4 offset-md-4">
+      <form [formGroup]="loginForm" (ngSubmit) = 'handleLogin(loginForm)' method="post">
+
+        <mat-form-field class="form-row">
+          <mat-label>Email</mat-label>
+          <input type="text" matInput name="email" placeholder="Enter Email ID" formControlName="email">
+          <mat-error *ngIf="email.invalid">Please Enter a valid Email</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-row">
+          <mat-label>Password</mat-label>
+          <input type="password" matInput name="password" placeholder="Enter Passowrd" formControlName="password">
+          <mat-error *ngIf="password.invalid">Please Enter a passowrd</mat-error>
+        </mat-form-field>
+
+          <button mat-raised-button color="primary" [disabled]="loginForm.invalid">Login</button>
+      </form>
+    </div>
+  </div>
+</div>

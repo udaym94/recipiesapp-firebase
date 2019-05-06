@@ -12,6 +12,10 @@ const routes: Routes = [
   component: DashboardComponent
 },
 {
+  path: 'dashboard',
+  component: DashboardComponent
+},
+{
   path: 'change-password',
   component: ChangePasswordComponent
 },

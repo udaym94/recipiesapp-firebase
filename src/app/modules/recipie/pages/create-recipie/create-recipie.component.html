@@ -1,3 +1,27 @@
-<p>
-  create-recipie works!
-</p>
+<div class="container content">
+    <div class="col-md-6">
+      <form [formGroup]="addRecipeForm" (ngSubmit) = 'storeRecipe(addRecipeForm)' method="post">
+        <mat-form-field class="form-row">
+          <mat-label>Title</mat-label>
+          <input type="text" matInput name="title" id="title" placeholder="Enter Title" formControlName="title" [readonly]='readonly'>
+          <mat-error *ngIf="title.invalid">Please Enter a Title</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-row">
+          <mat-label>Description</mat-label>
+          <textarea type="text" matInput name="description" id="description" placeholder="Enter Description" formControlName="description"></textarea>
+          <mat-error *ngIf="description.invalid">Please Enter a Description</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-row">
+          <mat-label>Image</mat-label>
+          <input type="file" matInput name="image" id="image" placeholder="Enter Email ID" formControlName="image">
+          <mat-error *ngIf="image.invalid">Please Upload a Image</mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" [disabled]="addRecipeForm.invalid">Add</button>
+
+      </form>
+  </div>
+</div>
+

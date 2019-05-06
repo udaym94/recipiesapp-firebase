@@ -47,6 +47,14 @@ export class AuthService {
     }
   }
 
+  async isLoggedIn() {
+    if (localStorage.getItem('uid')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   async changePassword(data: any) {
     try {
       const currentUser = this.angularFireAuth.auth.currentUser;
@@ -61,7 +69,17 @@ export class AuthService {
 
   async signOut() {
     try {
-      return await this.angularFireAuth.auth.signOut();
+      const currentUser = this.angularFireAuth.auth.currentUser;
+      if (currentUser) {
+        const loggedOut = await this.angularFireAuth.auth.signOut();
+        if (this.angularFireAuth.auth.currentUser) {
+          return false;
+        } else {
+          return true;
+        }
+      } else {
+        return false;
+      }
     } catch (error) {
       return error;
     }

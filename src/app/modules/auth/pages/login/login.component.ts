@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { AuthService } from '../../auth.service';
 import { MatSnackBar } from '@angular/material';
 import { UserService } from 'src/app/shared/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,10 +13,12 @@ import { UserService } from 'src/app/shared/user.service';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
+  userData: any;
   constructor( private formBuilder: FormBuilder,
     private authService: AuthService,
     private snackBar: MatSnackBar,
-    private userService: UserService) {  }
+    private userService: UserService,
+    private router: Router) {  }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -44,9 +47,11 @@ export class LoginComponent implements OnInit {
     try {
       const loggedin = await this.authService.handleLogin(data.value);
       if (loggedin) {
-        const userData = await this.userService.getUserDetailsByUID(loggedin.user.uid);
-        console.log('48', userData);
+        localStorage.setItem('uid', loggedin.user.uid);
         this.snackBar.open('Logged In Successfully, redirecting to Dashboard', 'close');
+          this.router.navigate(['user/dashboard']);
+        // const userData = await this.userService.getUserDetailsByUID(loggedin.user.uid);
+        // console.log('48', userData);
       }
     } catch (e) {
       this.snackBar.open(e.message, 'close');

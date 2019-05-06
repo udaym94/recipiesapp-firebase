@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
-import { map } from 'rxjs/operators';
+// import 'rxjs/add/operator/map';
 
 interface UserDoc {
   email: string;
@@ -21,15 +21,39 @@ export class UserService {
 
   async getUserDetailsByUID(uid: string) {
     try {
-      this.angularFirestore.collection('users').doc(uid).get().subscribe(res => {
-        console.log('27', res.data());
-        this.user = res.data();
-        // this.router.navigate(['user/dashboard']);
-        console.log('16', this.user);
-        return this.user;
-      });
+      const res = await this.angularFirestore.collection('users').doc(uid).get().toPromise();
+      this.user = res.data();
+      // this.angularFirestore.collection('users').doc(uid).get().subscribe(res => {
+      //   this.user = res.data();
+      //   return this.user;
+      // });
+      return this.user;
     } catch (e) {
       throw e;
     }
   }
+
+  async updateUserDetailsByUID(uid: string, data: UserDoc) {
+    try {
+      const res = await this.angularFirestore.collection('users').doc(uid).set(data);
+      // this.user = res.data();
+      this.user = await this.getUserDetailsByUID(uid);
+      // this.angularFirestore.collection('users').doc(uid).get().subscribe(res => {
+      //   this.user = res.data();
+      //   return this.user;
+      // });
+      return this.user;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  async isLoggedIn() {
+    if (localStorage.getItem('uid')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }

@@ -13,13 +13,12 @@
           <mat-error *ngIf="description.invalid">Please Enter a Description</mat-error>
         </mat-form-field>
 
-        <mat-form-field class="form-row">
-          <mat-label>Image</mat-label>
-          <input type="file" matInput name="image" id="image" placeholder="Enter Email ID" formControlName="image">
-          <mat-error *ngIf="image.invalid">Please Upload a Image</mat-error>
-        </mat-form-field>
+        <div class="input-file-container">
+          <button class="file-button" type="button" mat-raised-button color="accent" (click) = 'image.click()' >Select Image</button>
+          <input class="input-file" type="file" name="image" (change) = 'changeImage($event)' id="image" #image>
+        </div>
 
-        <button mat-raised-button color="primary" [disabled]="addRecipeForm.invalid">Add</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="addRecipeForm.invalid">Add</button>
 
       </form>
   </div>

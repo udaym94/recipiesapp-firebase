@@ -1,3 +1,24 @@
-<p>
-  list-recipie works!
-</p>
+<div class="container content">
+  <div class="row">
+    <!-- mat-item -->
+    <!-- mat-item end -->
+    <!-- item -->
+
+    <div class="col-md-4" *ngFor = "let recipe of recipeDoc">
+      <div class="image">
+        <img src="{{ recipe.image }}" class="img-responsive">
+      </div>
+      <div class="info">
+        <span class="title">{{ recipe.title }}</span>
+        <span class="posted-at float-right">Mar 12,2019</span>
+      </div>
+      <div class="actions">
+        <a mat-raised-button routerLink = '' color="primary" class="float-right">View More</a>
+      </div>
+    </div>
+    <!-- item -->
+    <!-- item -->
+    
+      <!-- item -->
+  </div>
+</div>
